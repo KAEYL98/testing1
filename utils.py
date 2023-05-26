@@ -3,9 +3,6 @@ import hashlib
 import os
 import csv
 from pathlib import Path
-from tqdm import tqdm
-from multiprocessing import Pool
-import sys
 
 # FIX: ERROR LOADING IN PROGRESS
 
