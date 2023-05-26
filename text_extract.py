@@ -1,5 +1,6 @@
 from utils import read_progress, write_header_file_ref,  get_all_filepaths, extract_text
 from tqdm import tqdm
+from multiprocessing import pool
 # DONE
 # SHA1
 # PROGRESS INDICATOR (2 LISTS DONE AND NOT DONE)
@@ -23,7 +24,8 @@ def main():
         if path.full_path in progress:
             print('here')
             pass
-        extract_text(path)
+        else:
+            extract_text(path)
 
 
 

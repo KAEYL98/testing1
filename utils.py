@@ -29,10 +29,11 @@ def get_all_filepaths(root_path:str = CWD, restricted_paths:list[str] = [TEXT_PA
     paths = []
     for folder, subfolders, files in os.walk(root_path):
         if folder in restricted_paths:
-            break
-        for file in files:
-            file_path = os.path.abspath(os.path.join(folder, file))
-            paths.append(FilePath(file_path, root_path))
+            pass
+        else:
+            for file in files:
+                file_path = os.path.abspath(os.path.join(folder, file))
+                paths.append(FilePath(file_path, root_path))
 
     return paths 
 
