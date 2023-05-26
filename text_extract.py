@@ -13,7 +13,7 @@ progress = read_progress()
 
 def run(path):
     if path.full_path in progress:
-        print('here', flush=True)
+        print('Skip', flush=True)
         pass
     else:
         extract_text(path) 
