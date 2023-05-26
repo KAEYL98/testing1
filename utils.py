@@ -7,11 +7,14 @@ from tqdm import tqdm
 from multiprocessing import Pool
 import sys
 
+# FIX: ERROR LOADING IN PROGRESS
+
 CWD = os.getcwd()
 TEXT_PATH = os.path.join(CWD, 'DOCS')
 OUT_PATH = os.path.join(CWD, 'REFS')
 REF_OUT_PATH = os.path.join(OUT_PATH, 'file_reference.csv')
 PROGRESS_OUT_PATH = os.path.join(OUT_PATH, 'file_progress.txt')
+ERROR_OUT_PATH = error_path = os.path.join(OUT_PATH , "file_errors.txt")
 
 class FilePath():
     def __init__(self, full_path: str, root_path: str) -> None:
@@ -37,12 +40,14 @@ def get_all_filepaths(root_path:str = CWD, restricted_paths:list[str] = [TEXT_PA
 
     return paths 
 
-def read_progress(input_path:str = PROGRESS_OUT_PATH) -> list[str]:
+def read_progress(input_path:str = PROGRESS_OUT_PATH, error_path:str = ERROR_OUT_PATH) -> list[str]:
+    progress = []
     if os.path.exists(input_path):
             with open(input_path, 'r') as f:
-                progress = f.read().splitlines()
-    else:
-        progress = []
+                progress += f.read().splitlines()
+    if os.path.exists(error_path):
+            with open(error_path, 'r') as f:
+                progress += f.read().splitlines()
     return progress
 
 def extract_text(pathfile:FilePath, text_root:str = TEXT_PATH, out_root:str = OUT_PATH) -> None:
@@ -61,8 +66,9 @@ def extract_text(pathfile:FilePath, text_root:str = TEXT_PATH, out_root:str = OU
             with open(write_path, 'a') as f:
                 f.writelines(decoded_text)
             write_one_file_ref(pathfile, REF_OUT_PATH, PROGRESS_OUT_PATH)
+
         except Exception:
-            error_path = os.path.join(out_root , "file_errors.txt")
+            
             with open(error_path, 'a') as f:
                 f.writelines(input_path + "\n")
 
